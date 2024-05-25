@@ -33,3 +33,8 @@ class BlogPostTest(TestCase):
         response = self.client.get(reverse('post_detail', args=[self.post1.id]))
         self.assertEqual(response.status_code, 200)
 
+    def test_post_details_on_post_detail_page(self):
+        response = self.client.get(reverse('post_detail', args=[self.post1.id]))
+        self.assertContains(response, self.post1.title)
+        self.assertContains(response, self.post1.text)
+
