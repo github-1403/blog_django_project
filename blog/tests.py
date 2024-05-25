@@ -13,6 +13,12 @@ class BlogPostTest(TestCase):
             status=Post.STATUS_CHOICES[0][0],
             author=user1)
 
+        self.post2 = Post.objects.create(
+            title="sample_title_2",
+            text="sample_text_2",
+            status=Post.STATUS_CHOICES[1][0],
+            author=user1)
+
     def test_post_list_url(self):
         response = self.client.get('/blog/')
         self.assertEqual(response.status_code, 200)
@@ -41,3 +47,8 @@ class BlogPostTest(TestCase):
     def test_status_404_if_post_id_not_exist(self):
         response = self.client.get(reverse('post_detail', args=[1000]))
         self.assertEqual(response.status_code, 404)
+
+    def test_draft_post_not_show_in_posts_list(self):
+        response = self.client.get(reverse('posts_list'))
+        self.assertContains(response, self.post1.title)
+        self.assertNotContains(response, self.post2.title)
