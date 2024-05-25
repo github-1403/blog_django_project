@@ -25,3 +25,11 @@ class BlogPostTest(TestCase):
         response = self.client.get(reverse('posts_list'))
         self.assertContains(response, self.post1.title)
 
+    def test_post_detail_url(self):
+        response = self.client.get(f'/blog/{self.post1.id}/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_post_detail_url_by_name(self):
+        response = self.client.get(reverse('post_detail', args=[self.post1.id]))
+        self.assertEqual(response.status_code, 200)
+
