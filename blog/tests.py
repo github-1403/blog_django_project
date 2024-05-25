@@ -20,3 +20,8 @@ class BlogPostTest(TestCase):
     def test_post_list_url_by_name(self):
         response = self.client.get(reverse('posts_list'))
         self.assertEqual(response.status_code, 200)
+
+    def test_post_title_on_post_list_page(self):
+        response = self.client.get(reverse('posts_list'))
+        self.assertContains(response, self.post1.title)
+
