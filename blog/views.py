@@ -3,7 +3,7 @@ from .models import Post
 
 
 def post_list_view(request):
-    posts_list = Post.objects.all()
+    posts_list = Post.objects.filter(status="pub")
     context = {'all_posts': posts_list}
     return render(request, template_name='blog/posts_list.html', context=context)
 
