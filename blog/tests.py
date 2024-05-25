@@ -38,3 +38,6 @@ class BlogPostTest(TestCase):
         self.assertContains(response, self.post1.title)
         self.assertContains(response, self.post1.text)
 
+    def test_status_404_if_post_id_not_exist(self):
+        response = self.client.get(reverse('post_detail', args=[1000]))
+        self.assertEqual(response.status_code, 404)
