@@ -21,6 +21,9 @@ class BlogPostTest(TestCase):
             status=Post.STATUS_CHOICES[1][0],
             author=user1)
 
+    def test_post_model_str(self):
+        self.assertEqual(self.post1.title, str(self.post1))
+
     def test_post_list_url(self):
         response = self.client.get('/blog/')
         self.assertEqual(response.status_code, 200)
@@ -54,3 +57,4 @@ class BlogPostTest(TestCase):
         response = self.client.get(reverse('posts_list'))
         self.assertContains(response, self.post1.title)
         self.assertNotContains(response, self.post2.title)
+
