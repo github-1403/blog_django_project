@@ -17,6 +17,7 @@
                             {{ post.text }}
                         </p>
                         <a class="btn btn-sm btn-success" href="{% url 'post_detail' post.id %}">read more</a>
+                        <a class="btn btn-sm btn-info" href="{% url 'post_update' post.id %}">edit</a>
                     </div>
                 </div>
                 {% endfor %}

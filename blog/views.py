@@ -6,7 +6,7 @@ from django.shortcuts import redirect, reverse
 
 
 def post_list_view(request):
-    posts_list = Post.objects.filter(status="pub")
+    posts_list = Post.objects.filter(status="pub").order_by('-datetime_modified')
     context = {'all_posts': posts_list}
     return render(request, template_name='blog/posts_list.html', context=context)
 
@@ -27,4 +27,14 @@ def post_create_view(request):
         form = NewPostForm()
 
     return render(request, 'blog/post_create.html', context={'form': form})
+
+
+def post_update_view(request,  pk):
+    post = get_object_or_404(Post, pk=pk)
+    form = NewPostForm(request.POST or None, instance=post)
+    if form.is_valid():
+        form.save()
+        return redirect(to=reverse('posts_list'))
+    return render(request, 'blog/post_create.html', context={'form': form})
+
 
