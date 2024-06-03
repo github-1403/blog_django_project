@@ -3,12 +3,21 @@ from .models import Post
 from django.contrib.auth.models import User
 from .forms import NewPostForm
 from django.shortcuts import redirect, reverse
+from django.views import generic
 
 
-def post_list_view(request):
-    posts_list = Post.objects.filter(status="pub").order_by('-datetime_modified')
-    context = {'all_posts': posts_list}
-    return render(request, template_name='blog/posts_list.html', context=context)
+# def post_list_view(request):
+#     posts_list = Post.objects.filter(status="pub").order_by('-datetime_modified')
+#     context = {'all_posts': posts_list}
+#     return render(request, template_name='blog/posts_list.html', context=context)
+#
+
+class PostListView(generic.ListView):
+    context_object_name = "all_posts"
+    template_name = "blog/posts_list.html"
+
+    def get_queryset(self):
+        return Post.objects.filter(status="pub").order_by('datetime_modified')
 
 
 def post_detail_view(request, pk):
