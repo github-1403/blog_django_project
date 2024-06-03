@@ -20,12 +20,16 @@ class PostListView(generic.ListView):
         return Post.objects.filter(status="pub").order_by('datetime_modified')
 
 
-def post_detail_view(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    context = {"post": post}
-    return render(request, template_name='blog/post_detail.html', context=context)
+# def post_detail_view(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+#     context = {"post": post}
+#     return render(request, template_name='blog/post_detail.html', context=context)
+#
 
-
+class PostDetailView(generic.DetailView):
+    model = Post
+    context_object_name = "post"
+    template_name = "blog/post_detail.html"
 def post_create_view(request):
     if request.method == "POST":
         form = NewPostForm(request.POST)
