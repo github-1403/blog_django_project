@@ -50,14 +50,20 @@ class PostCreateView(generic.CreateView):
     template_name = "blog/post_create.html"
 
 
+# def post_update_view(request,  pk):
+#     post = get_object_or_404(Post, pk=pk)
+#     form = NewPostForm(request.POST or None, instance=post)
+#     if form.is_valid():
+#         form.save()
+#         return redirect(to=reverse('posts_list'))
+#     return render(request, 'blog/post_create.html', context={'form': form})
 
-def post_update_view(request,  pk):
-    post = get_object_or_404(Post, pk=pk)
-    form = NewPostForm(request.POST or None, instance=post)
-    if form.is_valid():
-        form.save()
-        return redirect(to=reverse('posts_list'))
-    return render(request, 'blog/post_create.html', context={'form': form})
+
+class PostUpdateView(generic.UpdateView):
+    model = Post
+    form_class = NewPostForm
+    template_name = "blog/post_create.html"
+    context_object_name = "form"
 
 
 def post_delete_view(request, pk):
