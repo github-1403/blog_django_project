@@ -30,16 +30,25 @@ class PostDetailView(generic.DetailView):
     model = Post
     context_object_name = "post"
     template_name = "blog/post_detail.html"
-def post_create_view(request):
-    if request.method == "POST":
-        form = NewPostForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(to=reverse('posts_list'))
-    else:
-        form = NewPostForm()
 
-    return render(request, 'blog/post_create.html', context={'form': form})
+
+# def post_create_view(request):
+#     if request.method == "POST":
+#         form = NewPostForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect(to=reverse('posts_list'))
+#     else:
+#         form = NewPostForm()
+#
+#     return render(request, 'blog/post_create.html', context={'form': form})
+
+
+class PostCreateView(generic.CreateView):
+    model = Post
+    form_class = NewPostForm
+    template_name = "blog/post_create.html"
+
 
 
 def post_update_view(request,  pk):
