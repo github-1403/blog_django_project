@@ -3,6 +3,7 @@ from .models import Post
 from django.contrib.auth.models import User
 from .forms import NewPostForm
 from django.shortcuts import redirect, reverse
+from django.urls import reverse_lazy
 from django.views import generic
 
 
@@ -66,9 +67,17 @@ class PostUpdateView(generic.UpdateView):
     context_object_name = "form"
 
 
-def post_delete_view(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == 'POST':
-        post.delete()
-        return redirect(to=reverse('posts_list'))
-    return render(request, 'blog/post_delete.html', context={'post': post})
+# def post_delete_view(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+#     if request.method == 'POST':
+#         post.delete()
+#         return redirect(to=reverse('posts_list'))
+#     return render(request, 'blog/post_delete.html', context={'post': post})
+#
+
+class PostDeleteView(generic.DeleteView):
+    model = Post
+    template_name = "blog/post_delete.html"
+    success_url = reverse_lazy("posts_list")
+
+
