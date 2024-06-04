@@ -34,8 +34,9 @@
                     <input type="submit" value="Log Out" class="btn-primary text-light">
                 </form>
             {% else %}
-                <a class="text-light text-decoration-none" href='{% url "login" %}'>Log In</a>
-            {% endif %} 
+                <a class="text-light text-decoration-none" href='{% url "login" %}'>Log In</a> |
+                <a class="text-light text-decoration-none" href='{% url "signup" %}'>Sign Up</a>
+            {% endif %}
         </div>
     </div>
 </nav>
