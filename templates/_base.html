@@ -29,6 +29,10 @@
         <div class="mx-2 text-white">
             {% if user.is_authenticated %}
                 welcome {{ user.username }}
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Log Out" class="btn-primary text-light">
+                </form>
             {% else %}
                 <a class="text-light text-decoration-none" href='{% url "login" %}'>Log In</a>
             {% endif %} 
